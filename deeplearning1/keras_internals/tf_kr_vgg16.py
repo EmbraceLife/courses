@@ -7,7 +7,8 @@ import tensorflow as tf
 
 vgg16 = tf.contrib.keras.applications.vgg16.VGG16()
 
-
+## check model summary
+vgg16.summary()
 ################################
 ### vgg16 module
 # dr tf.contrib.keras.applications.vgg16
