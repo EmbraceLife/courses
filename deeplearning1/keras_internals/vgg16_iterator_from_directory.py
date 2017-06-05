@@ -6,6 +6,10 @@ get_batches_from_dir = tf.contrib.keras.preprocessing.image.DirectoryIterator
 func_imageDataGenerator = tf.contrib.keras.preprocessing.image.ImageDataGenerator
 
 sample_train_path = "/Users/Natsume/Downloads/data_for_all/dogscats/sample/train"
+
+def make_batches(data_dir, shuffle, class_mode)
+
+
 train_batches = get_batches_from_dir(directory = sample_train_path,
 							   image_data_generator=func_imageDataGenerator(),
 							   target_size=(224, 224),
