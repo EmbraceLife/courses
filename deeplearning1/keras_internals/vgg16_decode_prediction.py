@@ -19,3 +19,4 @@ preds = np.random.random((8, 1000))
 # 3. sort the list above in descending order on percentage values
 # 4. each sample correspond to one such list, all samples saved in a bigger list
 decodedPred = dePred(preds)
+print(decodedPred)

@@ -1,20 +1,15 @@
+# train vgg16 on dogscats and make vgg16 available
 from vgg16_fit_fit_generator import vgg16
 
-sample_test_path = "/Users/Natsume/Downloads/data_for_all/dogscats/sample/test"
 
-####################
-# test on model vgg16
+trained_model_path = "/Users/Natsume/Downloads/data_for_all/dogscats/results"
+vgg16.save(trained_model_path+'/tfkr_vgg16.h5')
 
-# preds = vgg16.test()
-#
-# # save
-# print('test before save: ', model.predict(X_test[0:2]))
-# model.save('my_model.h5')   # HDF5 file, you have to pip3 install h5py if don't have it
-# del model  # deletes the existing model
+del vgg16  # deletes the existing model
 #
 # # load
-# model = load_model('my_model.h5')
-# print('test after load: ', model.predict(X_test[0:2]))
+# model = load_model('my_model.h5') # already compiled
+
 # """
 # # save and load weights
 # model.save_weights('my_model_weights.h5')

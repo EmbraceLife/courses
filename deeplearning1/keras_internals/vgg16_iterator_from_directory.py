@@ -7,7 +7,7 @@ func_imageDataGenerator = tf.contrib.keras.preprocessing.image.ImageDataGenerato
 
 sample_train_path = "/Users/Natsume/Downloads/data_for_all/dogscats/sample/train"
 
-def make_batches(data_dir, shuffle, class_mode)
+
 
 
 train_batches = get_batches_from_dir(directory = sample_train_path,
@@ -32,6 +32,22 @@ val_batches = get_batches_from_dir(directory = sample_val_path,
 							   color_mode = "rgb", # add up to (224,224,3)
 							#    classes=["dogs", "cats"],
 							   class_mode="categorical", # for only 2 classes
+							   batch_size=32,
+							   shuffle=True,
+							   seed=123,
+							   data_format="channels_last"
+							#    save_to_dir
+							#    save_prefix
+							#    save_format
+							   )
+
+sample_test_path = "/Users/Natsume/Downloads/data_for_all/dogscats/sample/test"
+test_batches = get_batches_from_dir(directory = sample_test_path,
+							   image_data_generator=func_imageDataGenerator(),
+							   target_size=(224, 224),
+							   color_mode = "rgb", # add up to (224,224,3)
+							#    classes=["dogs", "cats"],
+							   class_mode=None, # unknown about classes
 							   batch_size=32,
 							   shuffle=True,
 							   seed=123,

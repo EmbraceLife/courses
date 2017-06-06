@@ -7,10 +7,11 @@ from vgg16_finetune import vgg16
 vgg16.summary()
 
 
+
 vgg16.fit_generator(
 					generator=train_batches,
 					steps_per_epoch=1,
-					epochs=1,
+					epochs=2,
 					verbose=2,
 					callbacks=None,
 					validation_data=val_batches,
