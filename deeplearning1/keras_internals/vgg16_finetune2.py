@@ -1,8 +1,7 @@
+# from tensorflow.contrib.keras.python.keras.applications.vgg16 import VGG16
+# vgg16=VGG16()
 
-# method1
-# to use official VGG16
-from tensorflow.contrib.keras.python.keras.applications.vgg16 import VGG16
-vgg16=VGG16()
+
 # to use Model() to create models
 from tensorflow.contrib.keras.python.keras.models import Model
 # to use Dense
@@ -16,7 +15,7 @@ from tensorflow.contrib.keras.python.keras.optimizers import Adam
 # Dense = tf.contrib.keras.layers.Dense
 # Adam = tf.contrib.keras.optimizers.Adam
 
-def ft(vgg16, num, lr = 0.001):
+def finetune_2layers(vgg16, num, lr = 0.001):
 	"""
 		1. drop the last layer of current model;
 		2. make all layers non-trainable;
@@ -40,18 +39,15 @@ def ft(vgg16, num, lr = 0.001):
 
 	# units: dimension of output sapece;
 	# Input_shape: the inputer layer or its previous layer's shape
-	x = Dense(units=num, activation='softmax', name='predictions')(vgg16.layers[-1].output)
+	x0 = Dense(units=100, activation='relu', name='last_dense')(vgg16.layers[-1].output)
+	x = Dense(units=num, activation='softmax', name='predictions_2')(x0)
 
 	# to build a new model, inputs==model's input layer|tensor, outputs == model's output tensor
 	vgg16 = Model(inputs=vgg16.input, outputs=x)
 
 	# compile this new model
-	vgg16.compile(optimizer=Adam(lr=lr),
-			loss='categorical_crossentropy', metrics=['accuracy'])
+	vgg16.compile(optimizer=Adam(lr=lr), loss='categorical_crossentropy', metrics=['accuracy'])
 
 	return vgg16
 
-# num set for number of classes to predict
-						# correpond to DirectoryIterator's args
-						 # set num=1, class_mode='binary'
-vgg16 = ft(vgg16, num=2) # if num = 2, class_mode="categorical"
+# vgg16_2layers = finetune_2layers(vgg16, num=2)

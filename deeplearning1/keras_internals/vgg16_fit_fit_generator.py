@@ -1,13 +1,16 @@
+
+
+# to get avaliable train_batches, val_batches
 from vgg16_iterator_from_directory import train_batches, val_batches
+
+# to get the newly created vgg16
 from vgg16_finetune import vgg16
-
-
 
 ## check model summary
 vgg16.summary()
 
 
-
+# train the new model for number of epochs
 vgg16.fit_generator(
 					generator=train_batches,
 					steps_per_epoch=1,
@@ -22,7 +25,8 @@ vgg16.fit_generator(
 					pickle_safe=False,
 					initial_epoch=0)
 
-
+trained_model_path = "/Users/Natsume/Downloads/data_for_all/dogscats/results"
+vgg16.save(trained_model_path+'/vgg16_2class.h5')
 #Notice we are passing in the validation dataset to the fit() method
 #For each epoch we test our model against the validation set
 # latest_weights_filename = None
@@ -32,17 +36,3 @@ vgg16.fit_generator(
 #     latest_weights_filename = 'ft%d.h5' % epoch
 #     vgg.model.save_weights(results_path+latest_weights_filename)
 # print "Completed %s fit operations" % no_of_epochs
-
-
-
-############################################
-# ## create fake data for training
-# # input_1 (InputLayer)         (None, 224, 224, 3)
-# fake_img = np.random.random((32*10, 224, 224, 3))
-# fake_lab = np.random.random((32*10, 1000))
-#
-# lr = 0.001
-# vgg16.compile(optimizer=Adam(lr=lr),
-# 		loss='categorical_crossentropy', metrics=['accuracy'])
-#
-# vgg16.fit(x=fake_img, y=fake_lab, batch_size=32, epochs=1, verbose=2, callbacks=None, validation_split=0.1, validation_data=None, shuffle=True, class_weight=None, sample_weight=None, initial_epoch=0)
