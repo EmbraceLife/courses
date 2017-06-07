@@ -5,22 +5,11 @@
 # 2. the three batches above are objects of DirectoryIterator class
 
 
+# among all save and load functions from numpy, pickle, torch, kur.utils.idx, bcolz can shrink large array 4 times smaller
 
-# method1
-from tensorflow.contrib.keras.python.keras.preprocessing.image import DirectoryIterator
-from tensorflow.contrib.keras.python.keras.preprocessing.image import ImageDataGenerator
-
-get_batches_from_dir = DirectoryIterator
-func_imageDataGenerator = ImageDataGenerator
-
-# # method 2:
-# get_batches_from_dir = tf.contrib.keras.preprocessing.image.DirectoryIterator
-# func_imageDataGenerator = tf.contrib.keras.preprocessing.image.ImageDataGenerator
+from save_load_large_array import bz_save_array, bz_load_array, np_save, np_load, pk_save, pk_load, idx_save, idx_load, iterator2array, get_batches_from_dir, func_imageDataGenerator
 
 sample_train_path = "/Users/Natsume/Downloads/data_for_all/dogscats/sample/train"
-
-
-
 
 train_batches = get_batches_from_dir(directory = sample_train_path,
 							   image_data_generator=func_imageDataGenerator(),
@@ -69,3 +58,42 @@ test_batches = get_batches_from_dir(directory = sample_test_path,
 							#    save_prefix
 							#    save_format
 							   )
+
+
+
+trained_model_path = "/Users/Natsume/Downloads/data_for_all/dogscats/results"
+
+# convert batch_iterators into arrays
+train_img_array, train_lab_array = iterator2array(sample_train_path)
+val_img_array, val_lab_array = iterator2array(sample_val_path)
+test_img_array, test_lab_array = iterator2array(sample_test_path)
+
+################################################
+# save and load each array using bcolz
+bz_save_array(trained_model_path+"/train_img_array", train_img_array)
+bz_save_array(trained_model_path+"/train_lab_array", train_lab_array)
+bz_save_array(trained_model_path+"/val_img_array", val_img_array)
+bz_save_array(trained_model_path+"/val_lab_array", val_lab_array)
+bz_save_array(trained_model_path+"/test_img_array", test_img_array)
+bz_save_array(trained_model_path+"/test_lab_array", test_lab_array)
+
+# load the check the arrays
+try_img_array = bz_load_array(trained_model_path+"/train_img_array")
+try_lab_array = bz_load_array(trained_model_path+"/train_lab_array")
+
+
+################################################
+# # save and load array using np_save, np_load
+# np_save(trained_model_path+"/train_img_array", train_img_array)
+# try_img_array = np_load(trained_model_path+"/train_img_array.npy")
+
+
+######################
+# save and load with pickle
+# pk_save(trained_model_path+"/train_img_array_pk", train_img_array)
+# try_img_array = pk_load(trained_model_path+"/train_img_array_pk")
+
+
+######################
+# idx_save(trained_model_path+"/train_img_array_idx", train_img_array)
+# train_img_idx = idx_load(trained_model_path+"/train_img_array_idx")
