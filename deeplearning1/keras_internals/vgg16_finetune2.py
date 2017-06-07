@@ -38,7 +38,7 @@ def finetune_2layers(vgg16, num, lr = 0.001):
 	for layer in vgg16.layers: layer.trainable=False
 
 	# units: dimension of output sapece;
-	# Input_shape: the inputer layer or its previous layer's shape
+	# Note: both vgg16.layers[-1].output and x0 are tensors, not layers
 	x0 = Dense(units=100, activation='relu', name='last_dense')(vgg16.layers[-1].output)
 	x = Dense(units=num, activation='softmax', name='predictions_2')(x0)
 
